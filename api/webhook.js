@@ -18,13 +18,11 @@ async function redisCommand(args) {
 }
 
 function normalize(raw) {
-  let timestamp = Math.floor(Date.now() / 1000);
-  if (raw.created_at) {
-    const parsed = new Date(raw.created_at);
-    if (!isNaN(parsed.getTime())) {
-      timestamp = Math.floor(parsed.getTime() / 1000);
-    }
-  }
+  // Selalu pakai waktu server (akurat, UTC). JANGAN parse raw.created_at
+  // dari BagiBagi — formatnya sering ambigu soal timezone (WIB vs UTC),
+  // yang bikin timestamp donasi asli meleset beberapa jam dari waktu
+  // sebenarnya dan bikin bingung logic "since"/fresh-check di Roblox.
+  const timestamp = Math.floor(Date.now() / 1000);
   return {
     id:        String(raw.transaction_id || raw.id || `bb_${Date.now()}_${Math.random().toString(36).slice(2)}`),
     name:      String(raw.donator_name || raw.name || raw.fullName || raw.username || "Anonymous").trim(),
