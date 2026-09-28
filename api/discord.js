@@ -3,7 +3,7 @@
 
 const https = require("https");
 
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1483298694391664702/3flhLEdabBBYWvYhsNkZ4WLvV1T4ZixUj13y8PELMh2xM2WSF28Li0x7NheZymEwz11z";
+const DISCORD_WEBHOOK = "";
 
 function postJSON(url, data) {
   return new Promise((resolve, reject) => {
